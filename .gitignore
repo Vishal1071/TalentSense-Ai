@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+
+# Dependency directories inside both frontend & backend
+TalentSense_Frontend/node_modules/
+TalentSense_Backend/node_modules/
+
+# Build outputs
+dist/
+build/
+TalentSense_Frontend/dist/
+TalentSense_Backend/dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env files
+.env
+backend/.env
+backend/.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Cache
+npm-cache/
+.eslintcache
+.cache/
+
+# Temporary files
+*.tmp
+*.temp
