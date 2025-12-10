@@ -37,3 +37,6 @@ npm-cache/
 # Temporary files
 *.tmp
 *.temp
+
+
+.env
