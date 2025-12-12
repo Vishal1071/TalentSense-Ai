@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary.js";
 import ResumeReport from "../models/ResumeReport.js";
 import { extractTextFromFile } from "../utils/parser.js";
+import { generateAIReport  } from "../utils/ai.js";
 
 export const uploadResume = async ( req, res, next) => {
     try {
@@ -19,12 +20,27 @@ export const uploadResume = async ( req, res, next) => {
             req.file.mimetype
         );
 
-        //3. Save to DB
+        //3. AI generationg Report
+        console.log("file receving", req.file);
+
+        const file = req.file;
+        const filePath = file.path;
+
+        console.log("Extracting text..");
+
+        const extractedText = await extractTextFromFile(filePath, file.mimetype);
+
+        console.log("Generating AI Report..");
+
+        const aiReport = await generateAIReport(extractedText);
+
+        //4. Save to DB
         const report = await ResumeReport.create({
             userId: req.user.userId,
             resumeUrl: upload.secure_url,
             originalName: req.file.originalname,
             parsedText: parsedText,
+            aiReport: JSON.parse(aiReport),
         });
 
         res.json({
