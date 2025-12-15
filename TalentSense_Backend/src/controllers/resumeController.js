@@ -1,9 +1,11 @@
 import cloudinary from "../config/cloudinary.js";
 import ResumeReport from "../models/ResumeReport.js";
 import { extractTextFromFile } from "../utils/parser.js";
-import { generateAIReport  } from "../utils/ai.js";
+import { generateAIReport } from "../utils/ai.js";
+import { detectRoleFromResume } from '../utils/roleDetect.js'
+import { calculateATSScore } from '../utils/ats.js'
 
-export const uploadResume = async ( req, res, next) => {
+export const uploadResume = async (req, res, next) => {
     try {
 
         if (!req.file) return res.status(400).json({ msg: "No file uploaded" });
@@ -21,26 +23,35 @@ export const uploadResume = async ( req, res, next) => {
         );
 
         //3. AI generationg Report
-        console.log("file receving", req.file);
-
         const file = req.file;
         const filePath = file.path;
 
-        console.log("Extracting text..");
-
         const extractedText = await extractTextFromFile(filePath, file.mimetype);
 
-        console.log("Generating AI Report..");
+        const cleanedText = extractedText
+            .replace(/\s+/g, " ")
+            .replace(/([a-z])([A-Z])/g, "$1 $2");
+        
+        //3.1 Detect role using AI
+        const {role, confidence } = await detectRoleFromResume(cleanedText);
 
-        const aiReport = await generateAIReport(extractedText);
+        //3.2 Calculate ATS score
+        const atsScore = calculateATSScore(cleanedText, role);
+
+        //3.3  Generate AI report
+        const aiReport = await generateAIReport(cleanedText);
 
         //4. Save to DB
         const report = await ResumeReport.create({
             userId: req.user.userId,
             resumeUrl: upload.secure_url,
             originalName: req.file.originalname,
-            parsedText: parsedText,
+            parsedText: cleanedText,
             aiReport: JSON.parse(aiReport),
+            atsScore: {
+                ...atsScore,
+                confidence,
+            },
         });
 
         res.json({

@@ -26,7 +26,12 @@ const ResumeSchema = new mongoose.Schema(
         aiReport: {
             type: Object,
             default: null,
-        }
+        },
+
+        atsScore: {
+            type: Object,
+            default: null,
+        },
     },{ timestamps: true }
 );
 
