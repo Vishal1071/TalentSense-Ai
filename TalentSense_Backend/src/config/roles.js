@@ -10,7 +10,7 @@ export const ROLE_KEYWORDS = {
   ],
 
   fullstack: [
-    "react", "node", "express", "mongo db",
+    "react", "node", "express", "mongodb",
     "mern", "github", "jwt", "api"
   ],
 
