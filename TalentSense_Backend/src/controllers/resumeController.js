@@ -72,7 +72,7 @@ export const uploadResume = async (req, res, next) => {
 
         //4. Save to DB
         const report = await ResumeReport.create({
-            userId: req.user.userId,
+            userId: req.user.id,
             resumeUrl: upload.secure_url,
             originalName: req.file.originalname,
             parsedText: cleanedText,

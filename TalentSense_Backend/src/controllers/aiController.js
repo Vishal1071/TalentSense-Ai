@@ -43,7 +43,7 @@ export const matchJobDescription = async (req, res) => {
         }
 
         const report = await JobReport.create({
-            userId: req.user.userId,
+            userId: req.user.id,
             jobText: jobDescription,
             matchScore: result.matchScore,
             matchedSkills: result.matchedSkills,

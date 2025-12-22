@@ -19,7 +19,7 @@ export const register = async (req, res, next) =>{
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        const user = await User.create({ name, email, passwordHash });
+        const user = await User.create({ name, email, password :passwordHash });
         
         res.json({
             ok: true,
@@ -45,7 +45,7 @@ export const login = async ( req, res, next ) =>{
        const user = await User.findOne({ email });
        if(!user) return res.status(404).json({ message: "User not found" });
 
-       const match = await bcrypt.compare(password, user.passwordHash);
+       const match = await bcrypt.compare(password, user.password);
        if(!match) return res.status(401).json({ message: "invalid password" });
 
        const token = jwt.sign(
@@ -72,7 +72,7 @@ export const login = async ( req, res, next ) =>{
 // ME (PROFILE)
 export const getMe = async ( req, res, next ) =>{
     try {
-        const user = await User.findById(req.user.userId).select('-passwordHash');
+        const user = await User.findById(req.user.id).select('-password');       
         res.json({ ok: true, user });
     } catch (error) {
         next(error);
