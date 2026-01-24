@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
             return;
         }
         try {
-            const res = await api.get('/auth/me');
+            const res = await api.get('/api/auth/me');
             setUser(res.data.user);
         } catch (error) {
             setUser(null);
@@ -32,13 +32,13 @@ export const AuthProvider = ({ children }) => {
 
     // Login
     const login = async ( email, password ) => {
-        const res = await api.post('/auth/login', { email, password });
+        const res = await api.post('/api/auth/login', { email, password });
 
         // assuming backend return {token}
         localStorage.setItem("token", res.data.token);
 
         // fetch user after login
-        const me = await api.get('/auth/me');
+        const me = await api.get('/api/auth/me');
         setUser(me.data.user)
     };
 
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     //register
     const register = async (name, email, password) => {
-        const res = await api.post('/auth/register',{
+        const res = await api.post('/api/auth/register',{
             name,
             email,
             password,
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
         if (res.data.token){
             localStorage.setItem("token", res.data.token);
-            const me = await api.get('/auth/me');
+            const me = await api.get('/api/auth/me');
             setUser(me.data.user)
         } else {
             await login(email, password);
