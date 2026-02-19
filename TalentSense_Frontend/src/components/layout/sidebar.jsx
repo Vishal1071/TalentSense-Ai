@@ -14,7 +14,8 @@ const Sidebar = () => {
                 {[
                     { to: "/", label: "Dashboard" },
                     { to: "/upload-resume", label: "Upload Resume" },
-                    { to: "/mock-interview", label: "Mock Interview" }
+                    { to: "/jobMatch", label: "JobMatch" },
+                    { to: "/mock-interview", label: "Mock Interview" },
                 ].map(link => (
                     <NavLink
                         key={link.to}

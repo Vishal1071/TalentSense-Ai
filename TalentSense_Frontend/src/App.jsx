@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard.jsx'
 import Userlayout from './components/layout/Userlayout.jsx'
 import UploadResume from './pages/UploadResume.jsx'
 import MockInterview from './pages/MockInterview.jsx'
+import JobMatch from './pages/JobMatch.jsx'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path='/upload-resume' element={<UploadResume />} />
             <Route path='/mock-interview' element={<MockInterview />} />
+            <Route path='/jobMatch' element={<JobMatch />} />
             </Route>
               
           </Routes>

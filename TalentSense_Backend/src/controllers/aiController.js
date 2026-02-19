@@ -7,14 +7,18 @@ const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
 })
 
-export const matchJobDescription = async (req, res) => {
+export const matchJobDescription = async (req, res, next) => {
     try {
         console.log("BODY:", req.body);
-        const { resumeText, jobDescription } = req.body;
+        console.log("FILE:", req.file);
 
-        if (!resumeText || !jobDescription) {
+        const { jobDescription } = req.body;
+
+        if (!req.file || !jobDescription) {
             return res.status(400).json({ ok: false, message: "Resume text and job description are required" });
         }
+
+        const resumeText = "extracted text from file";
 
         const prompt = JD_MATCH_PROMPT(resumeText, jobDescription);
 
