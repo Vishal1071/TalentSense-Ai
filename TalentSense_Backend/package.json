@@ -24,7 +24,7 @@
     "mongoose": "^9.0.1",
     "multer": "^2.0.2",
     "pdf-parse": "^2.4.5",
-    "pdf2json": "^4.0.0"
+    "pdf2json": "^4.0.2"
   },
   "devDependencies": {
     "eslint": "^9.39.1",

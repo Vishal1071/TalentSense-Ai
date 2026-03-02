@@ -29,7 +29,14 @@ const groqReport = async (prompt) => {
 
 export const startInterview = async (req, res, next) => {
   try {
-    const { resumeId, jobReportId } = req.body;
+    // const { resumeId, jobReportId } = req.body;
+
+    const resume = await ResumeReport.findOne({ userId: req.user.id }).sort({ createdAt: -1 });
+    const job = await JobReport.findOne({ userId: req.user.id }).sort({ createdAt: -1 });
+    console.log(resume);
+    console.log(job);
+    
+        
 
     // 🔐 Auth safety
     if (!req.user || !req.user.id) {
@@ -37,17 +44,17 @@ export const startInterview = async (req, res, next) => {
     }
 
     // 🧱 Input validation
-    if (!mongoose.Types.ObjectId.isValid(resumeId)) {
-      return res.status(400).json({ message: "Invalid resumeId" });
-    }
+    // if (!mongoose.Types.ObjectId.isValid(resumeId)) {
+    //   return res.status(400).json({ message: "Invalid resumeId" });
+    // }
 
-    if (!mongoose.Types.ObjectId.isValid(jobReportId)) {
-      return res.status(400).json({ message: "Invalid jobReportId" });
-    }
+    // if (!mongoose.Types.ObjectId.isValid(jobReportId)) {
+    //   return res.status(400).json({ message: "Invalid jobReportId" });
+    // }
 
     // 📦 Fetch data
-    const resume = await ResumeReport.findById(resumeId);
-    const job = await JobReport.findById(jobReportId);
+    // const resume = await ResumeReport.findById(resumeId);
+    // const job = await JobReport.findById(jobReportId);
 
     if (!resume || !job) {
       return res.status(404).json({ message: "Resume or Job not found" });
@@ -62,15 +69,15 @@ export const startInterview = async (req, res, next) => {
     );
 
     // 🧠 Create interview session
-    const interview = await InterviewChat.create({
+    await InterviewChat.create({
       userId: req.user.id,
-      resumeId,
-      JobReportId: jobReportId,
+      resumeId: resume._id,
+      JobReportId: job._id,
+      status: "active",
       message: [{ role: "ai", text: question }],
     });
 
     res.status(201).json({
-      interviewId: interview._id,
       question,
     });
   } catch (err) {
@@ -82,11 +89,15 @@ export const startInterview = async (req, res, next) => {
 
 export const answerQuestion = async (req, res, next) => {
   try {
-    const { interviewId, answer } = req.body;
+    const { answer } = req.body;
+    
+    const interview = await InterviewChat.findOne({
+      userId: req.user.id,
+      status: "active"
+    }).sort({ createdAt: -1 });
 
-    const interview = await InterviewChat.findById(interviewId);
-    if (!interview || interview.status !== "active") {
-      return res.status(400).json({ message: "invalide interview session" })
+    if (!interview) {
+      return res.status(400).json({ message: "not active interview session found" })
     }
 
     if (!answer || answer.trim().length < 10) {
@@ -136,11 +147,14 @@ export const answerQuestion = async (req, res, next) => {
 
 export const endInterview = async (req, res, next) => {
   try {
-    const { interviewId } = req.body;
-
-    const interview = await InterviewChat.findById(interviewId);
+    // const { interviewId } = req.body;
+    const interview = await InterviewChat.findById({
+      userId: req.user.id,
+      status: "active"
+    }).sort({ createdAt: -1 });
+    
     if (!interview) {
-      return res.status(404).json({ message: "interview not found" });
+      return res.status(404).json({ message: "No interview active found" });
     }
 
     const conversation = interview.message

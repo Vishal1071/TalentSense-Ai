@@ -1,4 +1,3 @@
-import fs from "fs";
 import mammoth from "mammoth";
 import PDFParser from "pdf2json";
 
@@ -42,3 +41,5 @@ export const extractTextFromFile = async (filePath, MimeType) => {
 
     throw new Error("Unsupport file type");
 };
+
+

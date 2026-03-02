@@ -2,6 +2,9 @@ import Groq from "groq-sdk";
 import JobReport from "../models/JobReport.js"
 import { JD_MATCH_PROMPT } from "../utils/promptTemplates.js"
 import { safeJsonParse } from "../utils/jsonSafeParse.js";
+import { extractTextFromFile } from "../utils/parser.js"
+import { cleanResumeText } from "../utils/textCleaner.js"
+
 
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
@@ -9,24 +12,46 @@ const groq = new Groq({
 
 export const matchJobDescription = async (req, res, next) => {
     try {
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
 
-        const { jobDescription } = req.body;
+        const { position, experience, skills, responsibilities, location } = req.body;
 
-        if (!req.file || !jobDescription) {
-            return res.status(400).json({ ok: false, message: "Resume text and job description are required" });
+        if (!position || !experience || !skills || !responsibilities) {
+            return res.status(400).json({
+                ok: false,
+                message: "All job fields are required"
+            });
         }
 
-        const resumeText = "extracted text from file";
+
+        if (!req.file) {
+            return res.status(400).json({
+                ok: false,
+                message: "Resume file is required"
+            });
+        }
+
+        const parsedText = await extractTextFromFile(
+            req.file.path,
+            req.file.mimetype
+        );
+
+        const resumeText = await cleanResumeText(parsedText);
+
+        const jobDescription = `
+        Position: ${position}
+        Experience Required: ${experience}
+        Location: ${location}
+        Required Skills:
+        ${skills}
+        Key Responsibilities:
+        ${responsibilities}
+        `;
 
         const prompt = JD_MATCH_PROMPT(resumeText, jobDescription);
 
         const compilation = await groq.chat.completions.create({
             model: "llama-3.1-8b-instant",
-            messages: [
-                { role: "user", content: prompt }
-            ],
+            messages: [{ role: "user", content: prompt }],
             temperature: 0.2
         });
 
