@@ -148,7 +148,7 @@ export const answerQuestion = async (req, res, next) => {
 export const endInterview = async (req, res, next) => {
   try {
     // const { interviewId } = req.body;
-    const interview = await InterviewChat.findById({
+    const interview = await InterviewChat.findOne({
       userId: req.user.id,
       status: "active"
     }).sort({ createdAt: -1 });
