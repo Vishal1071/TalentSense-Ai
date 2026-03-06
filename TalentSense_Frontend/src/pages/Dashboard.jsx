@@ -1,4 +1,5 @@
 import { useAuth } from "../context/AuthContext.jsx";
+import Circuler from "../components/commn/CircularProgress.jsx"
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -12,8 +13,8 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
           {[
             { title: "Resumes Uploaded", value: 5 },
-            { title: "Last Resume Score", value: "78%" },
-            { title: "JD Match", value: "65%" },
+            { title: "Last Resume Score", value: 78 },
+            { title: "JD Match", value: 65 },
             { title: "Mock Interviews", value: 2 },
           ].map((card) => (
             <div
@@ -21,7 +22,7 @@ const Dashboard = () => {
               className="glass-card p-4 rounded-lg"
             >
               <p className="text-muted">{card.title}</p>
-              <p className="text-2xl font-bold text-accent">{card.value}</p>
+              <p className="text-2xl font-bold text-accent"><Circuler percentage={card.value}/></p>
             </div>
           ))}
         </div>

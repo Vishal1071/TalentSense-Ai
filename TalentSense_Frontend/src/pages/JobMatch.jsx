@@ -4,10 +4,16 @@ import api from '../api/axios.js'
 const JobMatch = () => {
 
     const [resumeFile, setResumeFile] = useState(null);
-    const [jobDescription, setJobDescription] = useState("");
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
     const [error, setError] = useState("");
+    const [jobDescription, setJobDescription] = useState({
+        position: "",
+        experience: "", 
+        skills: "", 
+        responsibilities: "", 
+        location: "",
+    });
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -28,19 +34,32 @@ const JobMatch = () => {
         setResumeFile(file);
     };
 
+    const handlechanges = (e) =>{
+        const {name, value} = e.target
+        setJobDescription({
+            ...jobDescription, 
+            [name]: value
+        })
+    }
+
     const handleMatch = async () => {
         console.log("Resume:", resumeFile);
         console.log("Type:", typeof resumeFile);
+        console.log("job Description", jobDescription);
 
 
-        if (!resumeFile || !jobDescription.trim()) {
+        if (!resumeFile || !jobDescription.position || !jobDescription.experience || !jobDescription.skills || !jobDescription.responsibilities || !jobDescription.location) {
             setError("Resume and job Description are required");
             return;
         }
 
         const formData = new FormData();
         formData.append("resume", resumeFile);
-        formData.append("jobDescription", jobDescription);
+        formData.append("position", jobDescription.position);
+        formData.append("experience", jobDescription.experience);
+        formData.append("skills", jobDescription.skills);
+        formData.append("responsibilities", jobDescription.responsibilities);
+        formData.append("location", jobDescription.location);
 
         try {
             setLoading(true);
@@ -59,29 +78,70 @@ const JobMatch = () => {
 
     return (
         <>
-            <div className="container-lg mt-6">
+            <div className="container-lg mt-6 justify-items-center">
                 <h1>JD Match Analyzer</h1>
                 <p className="text-muted mb-6">
                     Compare your resume against a job description and get match insights.
                 </p>
 
-                <div className="glass-card max-w-2xl">
+                <   div className="glass-card max-w-2xl min-w-160">
 
                     {error && <div className="error-message">{error}</div>}
 
                     <div className="form-group">
                         <label className="form-label">Upload Resume (PDF)</label>
-                        <input name="resume" type="file" accept=".pdf,.docx" onChange={handleFileChange} />
+                        <label
+                                htmlFor="resume-upload"
+                                className="flex  items-center justify-center gap-4 p-10 border-2 border-dashed rounded-2xl cursor-pointer transition-all duration-200 hover:opacity-70 hover:scale-[1.01] text-center"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 " viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                    </svg>
+                        <input name="resume" type="file" accept=".pdf,.docx" onChange={handleFileChange}/>
+                        </label>
                     </div>
 
-                    <div className="form-group mt-6">
-                        <label className="form-label">Paste Job Description</label>
-                        <textarea
-                            rows="6"
-                            value={jobDescription}
-                            onChange={(e) => setJobDescription(e.target.value)}
-                            placeholder="Paste full job description here..."
-                        />
+                    <div className="form-group mt-4">
+                        <label className='form-label'>Position</label>
+                        <input 
+                         type="text"
+                         name="position"
+                         onChange={handlechanges}
+                         placeholder='e.g. MERN stack Developer'
+                         />
+
+                         <label className='form-label'>Experience</label>
+                        <input 
+                         type="text"
+                         name="experience"
+                         onChange={handlechanges}
+                         placeholder='e.g. 2+ years'
+                         />
+
+                         <label className='form-label'>Skills</label>
+                        <input 
+                         type="text"
+                         name="skills"
+                         onChange={handlechanges}
+                         placeholder='React, Node.js, MongoDB'
+                         />
+
+                         <label className='form-label'>Responsibilities</label>
+                        <input 
+                         type="text"
+                         name="responsibilities"
+                         onChange={handlechanges}
+                         placeholder='Describe job Responsibilities'
+                         />
+
+                         <label className='form-label'>Location</label>
+                        <input 
+                         type="text"
+                         name="location"
+                         onChange={handlechanges}
+                         placeholder='Ahemdabad / Remote'
+                         />
+
                     </div>
 
                     <button
