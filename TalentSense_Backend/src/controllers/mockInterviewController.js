@@ -33,10 +33,6 @@ export const startInterview = async (req, res, next) => {
 
     const resume = await ResumeReport.findOne({ userId: req.user.id }).sort({ createdAt: -1 });
     const job = await JobReport.findOne({ userId: req.user.id }).sort({ createdAt: -1 });
-    console.log(resume);
-    console.log(job);
-    
-        
 
     // 🔐 Auth safety
     if (!req.user || !req.user.id) {
