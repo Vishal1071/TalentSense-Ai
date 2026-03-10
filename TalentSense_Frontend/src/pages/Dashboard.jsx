@@ -19,10 +19,10 @@ const Dashboard = () => {
           ].map((card) => (
             <div
               key={card.title}
-              className="glass-card p-4 rounded-lg"
+              className="glass-card rounded-lg"
             >
-              <p className="text-muted">{card.title}</p>
               <p className="text-2xl font-bold text-accent"><Circuler percentage={card.value}/></p>
+              <p className="text-muted">{card.title}</p>
             </div>
           ))}
         </div>

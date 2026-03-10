@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import api from '../api/axios.js'
+import Circuler from "../components/commn/CircularProgress.jsx"
 
 
 const UploadResume = () => {
@@ -101,35 +102,79 @@ const UploadResume = () => {
 
 
                 {result && (
-                    <div className="glass-card max-w-xl mt-8 slide-up">
-                        <h2>Analysis Result</h2>
+                    <div className="glass-card max-w-2xl mt-8 slide-up ">
+                        <h2 className='mb-8 flex flex-col items-center'>Analysis Result</h2>
 
-                        <p>
-                            <strong>Score:</strong>{" "}
-                            <span className="text-accent">{result.score}%</span>
-                        </p>
+                        <div className="flex items-center gap-50 lili mb-8">
 
-                        {result.missingSkills?.length > 0 && (
+                            <div className="flex flex-col items-center">
+                                <span>
+                                    <Circuler percentage={result.atsScore.score} />
+                                </span>
+                                <strong>ATS Score</strong>
+                            </div>
+
+                            <div className="flex flex-col gap-1">
+                                <label><strong>Role:</strong> {result.atsScore.role}</label>
+                                <label><strong>Level:</strong> {result.atsScore.level}</label>
+                                <label><strong>Experience Level:</strong> {result.aiReport.experienceLevel}</label>
+                            </div>
+
+                        </div>
+
+
+                        <div>
+                            <h4>Summary</h4>
+                            <ul><li>{result.aiReport.summary}</li></ul>
+                        </div>
+
+                        {result.aiReport.strengths?.length > 0 && (
                             <div className="mt-4">
-                                <h4>Missing Skills</h4>
-                                <ul className="list">
-                                    {result.missingSkills.map((skill, i) => (
+                                <h4>Strengths</h4>
+                                <ul className="list-disc li">
+                                    {result.aiReport.strengths.map((skill, i) => (
+                                        <li key={i}>{skill}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {result.aiReport.weaknesses?.length > 0 && (
+                            <div className="mt-4">
+                                <h4>Weaknesses</h4>
+                                <ul className="list-disc li">
+                                    {result.aiReport.weaknesses.map((skill, i) => (
+                                        <li key={i}>{skill}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {result.aiReport.skillGaps?.length > 0 && (
+                            <div className="mt-4">
+                                <h4>Skill gaps</h4>
+                                <ul className="list-disc li">
+                                    {result.aiReport.skillGaps.map((skill, i) => (
                                         <li key={i}>{skill}</li>
                                     ))}
                                 </ul>
                             </div>
                         )}
 
-                        {result.suggestions?.length > 0 && (
+                        {result.aiReport.recommendations?.length > 0 && (
                             <div className="mt-4">
-                                <h4>Suggestions</h4>
-                                <ul className="list">
-                                    {result.suggestions.map((s, i) => (
-                                        <li key={i}>{s}</li>
+                                <h4>Recommendations</h4>
+                                <ul className="list-disc li">
+                                    {result.aiReport.recommendations.map((skill, i) => (
+                                        <li key={i}>{skill}</li>
                                     ))}
                                 </ul>
                             </div>
-                        )}
+                        )} <br />
+
+                        <div>
+                            <h4>Reality check</h4>
+                            <ul><li>{result.aiReport.realismCheck}</li></ul>
+                        </div>
+
                     </div>
                 )}
             </div>

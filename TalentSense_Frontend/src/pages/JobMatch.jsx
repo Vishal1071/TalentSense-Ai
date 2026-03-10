@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import api from '../api/axios.js'
+import Circuler from "../components/commn/CircularProgress.jsx"
+
 
 const JobMatch = () => {
 
@@ -165,15 +167,15 @@ const JobMatch = () => {
 
                         <h2>Match Result</h2>
 
-                        <p>
-                            <strong>Match Score:</strong>{" "}
-                            <span className="text-accent">{result.matchScore}%</span>
-                        </p>
+                        <div className='flex flex-col items-center'>
+                            <Circuler percentage={result.matchScore} />
+                            <strong>Match Score</strong>
+                        </div>
 
                         {result.matchedSkills?.length > 0 && (
                             <div className="mt-4">
                                 <h4>Matched Skills</h4>
-                                <ul className="list">
+                                <ul className="list-disc li">
                                     {result.matchedSkills.map((skill, i) => (
                                         <li key={i}>{skill}</li>
                                     ))}
@@ -184,7 +186,7 @@ const JobMatch = () => {
                         {result.missingSkills?.length > 0 && (
                             <div className="mt-4">
                                 <h4>Missing Skills</h4>
-                                <ul className="list">
+                                <ul className="list-disc li">
                                     {result.missingSkills.map((skill, i) => (
                                         <li key={i}>{skill}</li>
                                     ))}
@@ -195,7 +197,7 @@ const JobMatch = () => {
                         {result.recommendations?.length > 0 && (
                             <div className="mt-4">
                                 <h4>Suggestions</h4>
-                                <ul className="list">
+                                <ul className="list-disc li">
                                     {result.recommendations.map((s, i) => (
                                         <li key={i}>{s}</li>
                                     ))}
