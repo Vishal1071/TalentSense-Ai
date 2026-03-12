@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.js';
 import resumeRouter from './routes/resume.js'
 import aiRoutes from './routes/ai.js';
 import mockInterviewRoutes from './routes/mockInterview.js'
+import dashboarddata from './routes/Dashboard.js'
 
 dotenv.config();
 await connectDB();
@@ -19,6 +20,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRoutes);
 app.use('/api/ai/mock-interview', mockInterviewRoutes);
+app.use('/api/getdata', dashboarddata   )
 
 app.use((err, req, res, next) => {
     console.error(err);
