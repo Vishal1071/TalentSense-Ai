@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
         window.location.href = "/login";
     };
 
+    
     //register
     const register = async (name, email, password) => {
         const res = await api.post('/api/auth/register',{
