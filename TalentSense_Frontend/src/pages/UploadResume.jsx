@@ -50,14 +50,14 @@ const UploadResume = () => {
 
     return (
         <>
-            <div className="container-lg mt-6 justify-items-center">
+            <div className="container-lg mt-6 px-4">
                 <h1>Upload Resume</h1>
                 <p className="text-muted mb-6">
                     Upload your resume to analyze skills and get improvement suggestions.
                 </p>
 
 
-                <div className="glass-card max-w-xl min-w-lg min-h-[290px]">
+                <div className="glass-card max-w-xl w-full min-h-[290px]">
                     {error && <div className="error-message">{error}</div>}
 
                     {loading ? (
@@ -105,7 +105,7 @@ const UploadResume = () => {
                     <div className="glass-card max-w-2xl mt-8 slide-up ">
                         <h2 className='mb-8 flex flex-col items-center'>Analysis Result</h2>
 
-                        <div className="flex items-center gap-50 lili mb-8">
+                        <div className="flex flex-col md:flex-row items-center gap-6 mb-8">
 
                             <div className="flex flex-col items-center">
                                 <span>

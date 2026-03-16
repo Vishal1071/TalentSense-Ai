@@ -415,7 +415,7 @@ button:disabled,
 
 /*css for mokeInterview sesion*/
 .chat-container{
-  height:74vh;
+  height:calc(90vh - 150px);
   overflow-y:auto;
   display:flex;
   flex-direction:column;
@@ -423,20 +423,31 @@ button:disabled,
   padding:20px;
 }
 
+.user-msg,
+.ai-msg{
+  padding:10px 14px;
+  border-radius:12px;
+  max-width:85%;
+  word-wrap:break-word;
+}
+
 .user-msg{
   align-self:flex-end;
   background:#fa5838;
-  padding:10px 14px;
-  border-radius:12px;
-  max-width:60%;
 }
 
 .ai-msg{
   align-self:flex-start;
   background:#2c2c2c;
-  padding:10px 14px;
-  border-radius:12px;
-  max-width:60%;
+}
+
+textarea{
+  width:100%;
+  box-sizing:border-box;
+}
+
+.chat-container::-webkit-scrollbar{
+  width:6px;
 }
 
 .typing span {
@@ -446,7 +457,9 @@ button:disabled,
 .typing span:nth-child(2){
   animation-delay: 0.2s;
 }
-
+.me{
+  margin-top: 20px;
+}
 .typing span:nth-child(3){
   animation-delay: 0.4s;
 }
@@ -462,6 +475,6 @@ button:disabled,
 }
 
 .lili{
-  padding-left: 50px;
+  padding-left:20px;
 }
 

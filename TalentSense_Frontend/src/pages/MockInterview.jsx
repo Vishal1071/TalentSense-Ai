@@ -103,7 +103,7 @@ const MockInterview = () => {
   };
 
   return (
-    <>
+    <div>
       <div className='chat-container'>
 
         {messages.map((msg, i) => (
@@ -206,8 +206,8 @@ const MockInterview = () => {
         <div ref={bottomRef}></div>
       </div>
 
-      <div className="w-full flex justify-center mt-4">
-        <div className="w-full max-w-3xl relative">
+      <div className="w-full flex justify-center me">
+        <div className="w-full max-w-3xl mx-auto relative px-3">
 
           <textarea
             value={input}
@@ -244,7 +244,7 @@ const MockInterview = () => {
 
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

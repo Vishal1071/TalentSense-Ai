@@ -1,43 +1,63 @@
-import { NavLink } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { useState } from "react";
+import "./layout.css";
 
 const Sidebar = () => {
     const { logout } = useAuth();
+    const [open, setOpen] = useState(false);
+
+    const links = [
+        { to: "/", label: "Dashboard" },
+        { to: "/upload-resume", label: "Upload Resume" },
+        { to: "/jobMatch", label: "JobMatch" },
+        { to: "/mock-interview", label: "Mock Interview" },
+    ];
 
     return (
-        <div className="side w-74 h-screen glass-card flex flex-col">
-            <div className="p-6 border-b" style={{ borderColor: 'var(--glass-border)' }}>
-                <h3>TalentSense AI</h3>
+        <>
+            {/* MOBILE TOP BAR */}
+            <div className="mobile-header">
+                <h3 className="logo">TalentSense AI</h3>
+
+                <button
+                    className="burger"
+                    onClick={() => setOpen(!open)}
+                >
+                    ☰
+                </button>
             </div>
 
-            <nav className="list flex-1 p-4">
-                {[
-                    { to: "/", label: "Dashboard" },
-                    { to: "/upload-resume", label: "Upload Resume" },
-                    { to: "/jobMatch", label: "JobMatch" },
-                    { to: "/mock-interview", label: "Mock Interview" },
-                ].map(link => (
-                    <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className={({ isActive }) =>
-                            `lol flex items-center px-4 py-3 rounded-lg transition-all font-medium
-     ${isActive
-                                ? "bg-[var(--accent-primary)] text-white shadow-md"
-                                : "text-muted hover:bg-[var(--glass-bg)] hover:text-white"
-                            }`
-                        }
-                    >
-                        {link.label}
-                    </NavLink>
-                ))}
-            </nav>
+            {/* OVERLAY */}
+            {open && <div className="overlay" onClick={() => setOpen(false)}></div>}
 
-            <button onClick={logout} className="m-4 text-red-400 hover:text-red-500">
-                Logout
-            </button>
-        </div>
-    )
-}
+            {/* SIDEBAR */}
+            <div className={`sidebar ${open ? "open" : ""}`}>
+                <div className="sidebar-header">
+                    <h3>TalentSense AI</h3>
+                </div>
 
-export default Sidebar
+                <nav className="nav">
+                    {links.map((link) => (
+                        <NavLink
+                            key={link.to}
+                            to={link.to}
+                            className={({ isActive }) =>
+                                isActive ? "nav-link active" : "nav-link"
+                            }
+                            onClick={() => setOpen(false)}
+                        >
+                            {link.label}
+                        </NavLink>
+                    ))}
+                </nav>
+
+                <button onClick={logout} className="logout">
+                    Logout
+                </button>
+            </div>
+        </>
+    );
+};
+
+export default Sidebar;

@@ -80,13 +80,13 @@ const JobMatch = () => {
 
     return (
         <>
-            <div className="container-lg mt-6 justify-items-center">
+            <div className="container-lg mt-6 px-4">
                 <h1>JD Match Analyzer</h1>
                 <p className="text-muted mb-6">
                     Compare your resume against a job description and get match insights.
                 </p>
 
-                <   div className="glass-card max-w-2xl min-w-160">
+                   <div className="glass-card max-w-xl w-full min-h-[290px]">
 
                     {error && <div className="error-message">{error}</div>}
 
@@ -163,7 +163,7 @@ const JobMatch = () => {
                 </div>
 
                 {result && (
-                    <div className="glass-card max-w-2xl mt-8 slide-up">
+                    <div className="glass-card max-w-xl w-full min-h-[290px] mt-5">
 
                         <h2>Match Result</h2>
 

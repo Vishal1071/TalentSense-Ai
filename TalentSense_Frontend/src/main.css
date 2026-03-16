@@ -1,24 +1,3 @@
-.user-layout {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-}
-
-/* Sidebar should be fixed width */
-.user-layout > :first-child {
-  width: 290px; /* adjust based on your Sidebar */
-  flex-shrink: 0;
-}
-
-/* Main content area */
-.user-main {
-  margin-left: 290px;   /* 👈 MUST match sidebar width */
-  min-height: 100vh;
-  padding: 15px 24px 10px 24px;
+body {
   overflow-x: hidden;
-}
-
-.user-main > *{
-    width: 930px;
-    max-width: 100%;
 }

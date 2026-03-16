@@ -1,18 +1,17 @@
-import { Outlet } from 'react-router-dom'
-import Sidebar from './sidebar'
-import '../.././main.css'
+import { Outlet } from "react-router-dom";
+import Sidebar from "./sidebar";
+import "./layout.css";
 
 const Userlayout = () => {
   return (
-    <>
-      <div className='user-layout'>
-        <Sidebar />
-        <div className="user-main">
-            <Outlet />
-        </div>
-      </div>
-    </>
-  )
-}
+    <div className="layout">
+      <Sidebar />
 
-export default Userlayout
+      <main className="content">
+        <Outlet />
+      </main>
+    </div>
+  );
+};
+
+export default Userlayout;
