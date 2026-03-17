@@ -1,4 +1,4 @@
-import Groq from "groq-sdk";
+import Groq from "groq-sdk/index.mjs";
 import { safeJsonParse } from "./jsonSafeParse.js";
 import {RESUME_ANALYSIS_PROMPT} from "./promptTemplates.js";
 

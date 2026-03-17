@@ -7,7 +7,7 @@ import {
   evaluateAnswerPrompt,
   interviewSummaryPrompt,
 } from "../utils/promptTemplates.js"
-import Groq from "groq-sdk"
+import Groq from "groq-sdk/index.mjs"
 import { cleanResumeText } from "../utils/textCleaner.js"
 import { safeJsonParse } from "../utils/jsonSafeParse.js"
 

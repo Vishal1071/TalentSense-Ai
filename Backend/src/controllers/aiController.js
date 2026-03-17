@@ -1,4 +1,4 @@
-import Groq from "groq-sdk";
+import Groq from "groq-sdk/index.mjs";
 import JobReport from "../models/JobReport.js"
 import { JD_MATCH_PROMPT } from "../utils/promptTemplates.js"
 import { safeJsonParse } from "../utils/jsonSafeParse.js";
