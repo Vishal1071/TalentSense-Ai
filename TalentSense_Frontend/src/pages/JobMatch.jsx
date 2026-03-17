@@ -80,7 +80,7 @@ const JobMatch = () => {
 
     return (
         <>
-            <div className="container-lg mt-6 px-4">
+            <div className="container-lg mt-6 px-4 flex flex-col items-center">
                 <h1>JD Match Analyzer</h1>
                 <p className="text-muted mb-6">
                     Compare your resume against a job description and get match insights.

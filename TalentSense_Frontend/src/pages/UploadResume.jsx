@@ -50,7 +50,7 @@ const UploadResume = () => {
 
     return (
         <>
-            <div className="container-lg mt-6 px-4">
+            <div className="container-lg mt-6 px-4 flex flex-col items-center">
                 <h1>Upload Resume</h1>
                 <p className="text-muted mb-6">
                     Upload your resume to analyze skills and get improvement suggestions.
