@@ -45,10 +45,6 @@ const JobMatch = () => {
     }
 
     const handleMatch = async () => {
-        console.log("Resume:", resumeFile);
-        console.log("Type:", typeof resumeFile);
-        console.log("job Description", jobDescription);
-
 
         if (!resumeFile || !jobDescription.position || !jobDescription.experience || !jobDescription.skills || !jobDescription.responsibilities || !jobDescription.location) {
             setError("Resume and job Description are required");
@@ -69,7 +65,6 @@ const JobMatch = () => {
             setResult(null);
 
             const res = await api.post("/api/ai/match-jd", formData);
-            console.log(res.data.report);
             setResult(res.data.report);
         } catch (error) {
             setError(error.response?.data?.message || "JD-match failed")

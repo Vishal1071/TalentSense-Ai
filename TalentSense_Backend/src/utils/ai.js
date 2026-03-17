@@ -19,8 +19,6 @@ export const generateAIReport = async (resumeText) => {
     const raw = response.choices[0].message.content;
     const aiReport = safeJsonParse(raw);
 
-    console.log("RAW AI RESPONSE:", aiReport);
-
     return aiReport;
 };
 

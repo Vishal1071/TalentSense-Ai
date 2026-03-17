@@ -39,7 +39,6 @@ const UploadResume = () => {
             setResult(null);
 
             const res = await api.post("/api/resume/upload", formData);
-            console.log(res.data.report);
             setResult(res.data.report);
         } catch (error) {
             setError(error.response?.data?.message || "Resume upload failed")
